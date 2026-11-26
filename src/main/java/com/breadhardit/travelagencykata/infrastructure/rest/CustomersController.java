@@ -48,13 +48,11 @@ public class CustomersController {
                 .customersRepository(customersRepository)
                 .id(customerId)
                 .build().handle();
-        return customer.isEmpty() ? ResponseEntity.noContent().build()
-                : ResponseEntity.ok(GetCustomerDTO.builder()
-                .name(customer.get().getName())
-                .surnames(customer.get().getSurnames())
-                .birthDate(customer.get().getBirthDate())
-                .passportNumber(customer.get().getPassportNumber())
-                .build());
+
+        return customer.isEmpty()
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.ok(toDTO(customer.get()));
+
     }
     @GetMapping("/customers")
     public ResponseEntity getCustomers(@RequestParam(name = "passport-number") String passportNumber) {
@@ -63,15 +61,21 @@ public class CustomersController {
                 .customersRepository(customersRepository)
                 .passport(passportNumber)
                 .build().handle();
-        return customer.isEmpty() ? ResponseEntity.noContent().build() :
-                ResponseEntity.ok(
-                  List.of(GetCustomerDTO.builder()
-                          .name(customer.get().getName())
-                          .surnames(customer.get().getSurnames())
-                          .birthDate(customer.get().getBirthDate())
-                          .passportNumber(customer.get().getPassportNumber())
-                          .build())
-                );
+
+        return customer.isEmpty()
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.ok(List.of(toDTO(customer.get())));
+
     }
+
+    private GetCustomerDTO toDTO(Customer customer) {
+        return GetCustomerDTO.builder()
+                .name(customer.getName())
+                .surnames(customer.getSurnames())
+                .birthDate(customer.getBirthDate())
+                .passportNumber(customer.getPassportNumber())
+                .build();
+    }
+
 
 }
