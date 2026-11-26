@@ -1,18 +1,20 @@
 package com.breadhardit.travelagencykata.infrastructure.persistence.entity;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Data;
-
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "CUSTOMERS")
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CustomerEntity {
     @Id
     @Column(name = "ID")
